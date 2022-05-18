@@ -7,7 +7,7 @@ spring:
         locator:
           enabled: true # must be false for x-forwarded to work
       forwarded:
-        enabled: true # enable x-forwarding
+        enabled: true # enable x-forwarding for spring-apidocs
       routes:
         - id: apidocs
           uri: http://localhost:8080
@@ -15,3 +15,4 @@ spring:
            - Path=/api/docs/**
           filters:
             - Rewrite-path=
+            - TokenRelay=
