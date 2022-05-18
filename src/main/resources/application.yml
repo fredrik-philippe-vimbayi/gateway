@@ -1,0 +1,17 @@
+server:
+  forward-headers-strategy: framework  # enable x-forwarding
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # must be false for x-forwarded to work
+      forwarded:
+        enabled: true # enable x-forwarding
+      routes:
+        - id: apidocs
+          uri: http://localhost:8080
+          predicates:
+           - Path=/api/docs/**
+          filters:
+            - Rewrite-path=
