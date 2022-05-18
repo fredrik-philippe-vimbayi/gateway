@@ -8,3 +8,10 @@ spring:
           enabled: true # must be false for x-forwarded to work
       forwarded:
         enabled: true # enable x-forwarding
+      routes:
+        - id: apidocs
+          uri: http://localhost:8080
+          predicates:
+           - Path=/api/docs/**
+          filters:
+            - Rewrite-path=
