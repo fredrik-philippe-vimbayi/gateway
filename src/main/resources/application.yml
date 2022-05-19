@@ -1,10 +1,20 @@
 server:
   forward-headers-strategy: framework  # enable x-forwarding
+  port: 8088
 spring:
+  application:
+    name: gateway
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true # must be false for x-forwarded to work
+          enabled: true
       forwarded:
         enabled: true # enable x-forwarding
+    consul:
+      discovery:
+        register: false
+        register-health-check: false
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${spring.cloud.client.hostname}:${random.int[1,999999]}
+      host: consul
