@@ -1,7 +1,16 @@
 server:
   forward-headers-strategy: framework  # enable x-forwarding
+  port: 8088
 spring:
+  application:
+    name: gateway-service
   cloud:
+    consul:
+      discovery:
+        register: false
+        register-health-check: false
+      config:
+        enabled: false
     gateway:
       discovery:
         locator:
@@ -9,10 +18,10 @@ spring:
       forwarded:
         enabled: true # enable x-forwarding for spring-apidocs
       routes:
-        - id: apidocs
-          uri: http://localhost:8080
+        - id: authentication
+          uri: lb://authentication
           predicates:
-           - Path=/api/docs/**
+           - Path=/auth/**  # convert path to just /register or sign-up &  /login
           filters:
-            - Rewrite-path=
-            - TokenRelay=
+            - RewritePath=/auth/(?<path>.*), /$\{path}
+#            - TokenRelay=
