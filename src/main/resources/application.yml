@@ -18,10 +18,19 @@ spring:
       forwarded:
         enabled: true # enable x-forwarding for spring-apidocs
       routes:
+        - id: registration
+          uri: lb://authentication
+          predicates:
+           - Path=/sign-up
+          filters:
+            - RewritePath=/sign-up, /register
         - id: authentication
           uri: lb://authentication
           predicates:
-           - Path=/auth/**  # convert path to just /register or sign-up &  /login
+            - Path=/login
           filters:
-            - RewritePath=/auth/(?<path>.*), /$\{path}
+            - RewritePath=/login, /authenticate
+
+#          filters:
+#            - RewritePath=/auth/(?<path>.*), /$\{path}
 #            - TokenRelay=
