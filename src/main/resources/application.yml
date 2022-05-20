@@ -27,6 +27,7 @@ spring:
            - Path=/sign-up
           filters:
             - RewritePath=/sign-up, /register
+
         - id: authentication
           uri: lb://authentication
           predicates:
@@ -34,6 +35,17 @@ spring:
           filters:
             - RewritePath=/login, /authenticate
 
-#          filters:
-#            - RewritePath=/auth/(?<path>.*), /$\{path}
-#            - TokenRelay=
+        - id: url-shortener
+          uri: lb://url-shortener
+          predicates:
+            - Path=/url/**
+          filters:
+              - RewritePath=/url/(?<path>.*), /$\{path}
+
+        - id: get-individual-shortened-url
+          uri: lb://url-shortener
+          predicates:
+            - Path=/urls/**
+          filters:
+              - RewritePath=/urls/(?<path>.*), /s/$\{path}
+
