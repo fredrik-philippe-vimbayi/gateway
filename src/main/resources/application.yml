@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: gateway
+  config:
+    import: optional:consul:consul:8500
   cloud:
     consul:
       discovery:
@@ -13,7 +15,8 @@ spring:
         instance-id: ${spring.application.name}:${spring.cloud.client.hostname}:${random.int[1,999999]}
       host: consul
       config:
-        enabled: false
+        enabled: true
+        format: yaml
     gateway:
       discovery:
         locator:
