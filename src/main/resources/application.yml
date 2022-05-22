@@ -5,12 +5,6 @@ spring:
   application:
     name: gateway
   cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      forwarded:
-        enabled: true # enable x-forwarding
     consul:
       discovery:
         register: false
@@ -18,3 +12,40 @@ spring:
         prefer-ip-address: true
         instance-id: ${spring.application.name}:${spring.cloud.client.hostname}:${random.int[1,999999]}
       host: consul
+      config:
+        enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      forwarded:
+        enabled: true # enable x-forwarding for spring-apidocs
+      routes:
+        - id: registration
+          uri: lb://authentication
+          predicates:
+           - Path=/sign-up
+          filters:
+            - RewritePath=/sign-up, /register
+
+        - id: authentication
+          uri: lb://authentication
+          predicates:
+            - Path=/login
+          filters:
+            - RewritePath=/login, /authenticate
+
+        - id: url-shortener
+          uri: lb://url-shortener
+          predicates:
+            - Path=/url/**
+          filters:
+              - RewritePath=/url/(?<path>.*), /$\{path}
+
+        - id: get-individual-shortened-url
+          uri: lb://url-shortener
+          predicates:
+            - Path=/urls/**
+          filters:
+              - RewritePath=/urls/(?<path>.*), /s/$\{path}
+
