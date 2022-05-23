@@ -50,10 +50,9 @@ spring:
               - RewritePath=/urls/(?<path>.*), /s/$\{path}
 
         - id: image-service
-          uri: lib://image-service
+          uri: lb://image-service
           predicates:
             - Path=/images/**
             - Method=GET,POST
           filters:
-            - PreserveHostHeader
-#            - RewritePath=/images/(?<path>.*), /images/$\{path}
+            - RewritePath=/images/(?<path>.*), /images/$\{path}
