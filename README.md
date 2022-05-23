@@ -13,6 +13,8 @@ containers which are registered to Consul service registration.
 | GET  | /url/short          | Get all short urls     | 200         | List of short-urls |
 | POST | /url/short          | Create a new short url | 201         | Short-url          |
 | GET  | /urls/:short-url-id | Navigate to a url      | 302         | Web page           |
+| POST | /image              | Upload an image        | 201         | -                  |
+| GET  | /image/:id          | Get a saved image      | 200         | Image preview      |
 
 
 ### Credit to the following microservices:
