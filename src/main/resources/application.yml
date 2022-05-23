@@ -13,7 +13,7 @@ spring:
         register-health-check: false
         prefer-ip-address: true
         instance-id: ${spring.application.name}:${spring.cloud.client.hostname}:${random.int[1,999999]}
-      host: consul
+      host: localhost
       config:
         enabled: true
         format: yaml
@@ -52,3 +52,10 @@ spring:
           filters:
               - RewritePath=/urls/(?<path>.*), /s/$\{path}
 
+        - id: image-service
+          uri: lib://image-service
+          predicates:
+            - Path=/images
+            - Method=GET,POST
+          filters:
+            - RewritePath=/images/(?<path>.*), /images/$\{path}
