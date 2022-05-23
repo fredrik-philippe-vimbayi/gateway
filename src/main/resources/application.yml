@@ -1,5 +1,4 @@
 server:
-  forward-headers-strategy: framework  # enable x-forwarding
   port: 8088
 spring:
   application:
@@ -21,8 +20,6 @@ spring:
       discovery:
         locator:
           enabled: true
-      forwarded:
-        enabled: true # enable x-forwarding for spring-apidocs
       routes:
         - id: registration
           uri: lb://authentication
