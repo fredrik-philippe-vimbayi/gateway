@@ -25,6 +25,7 @@ spring:
           uri: lb://authentication
           predicates:
            - Path=/sign-up
+           - Method=POST
           filters:
             - RewritePath=/sign-up, /register
 
@@ -32,6 +33,7 @@ spring:
           uri: lb://authentication
           predicates:
             - Path=/login
+            - Method=POST
           filters:
             - RewritePath=/login, /authenticate
 
@@ -53,6 +55,5 @@ spring:
           uri: lb://image-service
           predicates:
             - Path=/images/**
-            - Method=GET,POST
           filters:
             - RewritePath=/images/(?<path>.*), /images/$\{path}
