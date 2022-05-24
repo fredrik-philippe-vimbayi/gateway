@@ -1,5 +1,4 @@
 server:
-  forward-headers-strategy: framework  # enable x-forwarding
   port: 8088
 spring:
   application:
@@ -21,13 +20,12 @@ spring:
       discovery:
         locator:
           enabled: true
-      forwarded:
-        enabled: true # enable x-forwarding for spring-apidocs
       routes:
         - id: registration
           uri: lb://authentication
           predicates:
            - Path=/sign-up
+           - Method=POST
           filters:
             - RewritePath=/sign-up, /register
 
@@ -35,6 +33,7 @@ spring:
           uri: lb://authentication
           predicates:
             - Path=/login
+            - Method=POST
           filters:
             - RewritePath=/login, /authenticate
 
@@ -52,3 +51,9 @@ spring:
           filters:
               - RewritePath=/urls/(?<path>.*), /s/$\{path}
 
+        - id: image-service
+          uri: lb://image-service
+          predicates:
+            - Path=/images/**
+          filters:
+            - RewritePath=/images/(?<path>.*), /images/$\{path}
