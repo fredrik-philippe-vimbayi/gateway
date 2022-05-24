@@ -33,7 +33,7 @@ publishing messages on message exchanges and using routing keys.
    ```
 3. Run a MySQL database container on the network
    ```
-   docker run -d --name mysql --network <network-name> -v <database-volume>:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e 'MYSQL_ROOT_HOST=%' -e MYSQL_DATABASE=gateway -e MYSQL_USER=user -e MYSQL_PASSWORD=password -p 3308:3306 mysql:8.0.29
+   docker run -d --name mysql --network <network-name> -v <database-volume> -e MYSQL_ROOT_PASSWORD=root -e 'MYSQL_ROOT_HOST=%' -e MYSQL_DATABASE=gateway -e MYSQL_USER=user -e MYSQL_PASSWORD=password -p 3308:3306 mysql:8.0.29
    ```
 4. Run a Consul container on the network
     ```
