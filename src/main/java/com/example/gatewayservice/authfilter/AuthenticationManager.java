@@ -9,8 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +42,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 
             return Mono.just(new UsernamePasswordAuthenticationToken(subject, null, authorities));
 
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             return Mono.empty();
         }
     }
