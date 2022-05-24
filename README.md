@@ -92,9 +92,9 @@ publishing messages on message exchanges and using routing keys.
        hibernate:
          ddl-auto: update
      datasource:
-       url: jdbc:mysql://<database_url>
-       username: <username> 
-       password: <password> 
+       url: jdbc:mysql://mysql:3306/gateway?allowPublicKeyRetrieval=true&useSSL=false
+       username: user
+       password: password
    server:
      port: 8080
    ```
@@ -110,9 +110,9 @@ publishing messages on message exchanges and using routing keys.
        port: 8080
    datasources:
      default:
-       url: jdbc:mysql://<database_url>
-       username: <username> 
-       password: <password> 
+       url: jdbc:mysql://mysql:3306/gateway?allowPublicKeyRetrieval=true&useSSL=false
+       username: user
+       password: password
        dialect: MYSQL
    jpa.default.properties.hibernate.hbm2ddl.auto: update
    netty:
@@ -128,8 +128,7 @@ publishing messages on message exchanges and using routing keys.
    ```
    2. Url shortener service
    ```
-   docker run -d --name url_shortener --network <network-name> -p 8081:8080  -e CONSUL_HOST=consul -e CONSUL_PORT=8500 
-   ghcr.io/darkendhall/url_shortener:latest
+   docker run -d --name url_shortener --network <network-name> -p 8081:8080  -e CONSUL_HOST=consul -e CONSUL_PORT=8500 ghcr.io/darkendhall/url_shortener:latest
    ```
    3. Image service
    ```
